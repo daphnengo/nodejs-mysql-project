@@ -12,6 +12,13 @@ class Product {
   static findAllProducts() {
     return mysqlDb.execute('SELECT * FROM products');
   }
+
+  static findProductById(prodId) {
+    return mysqlDb.execute(
+      'SELECT * FROM products WHERE products.id = ?',
+      [prodId]
+    );
+  }
 };
 
 module.exports = Product;
