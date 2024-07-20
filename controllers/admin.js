@@ -22,6 +22,18 @@ exports.postAddProduct = (req, res, next) => {
   const product = new Product(null, title, imageUrl, price, description);
 
   product.addProduct()
-    .then(() => res.redirect('/'))
+    .then(() => res.redirect('/admin/manage-products'))
     .catch(error => console.log(error));
+};
+
+exports.getManageProducts = (req, res, next) => {
+  Product.findAllProducts()
+    .then(([allProducts]) => {
+      res.render('admin/manage-products.html', {
+        products: allProducts,
+        pageTitle: 'Admin Manage Products',
+        path: '/admin/manage-products',
+      });
+    })
+    .catch(err => console.log(err));
 };
