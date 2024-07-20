@@ -2,9 +2,9 @@ const Product = require('../models/product');
 
 exports.getProducts = (req, res, next) => {
   Product.findAllProducts()
-    .then(([rows]) => {
+    .then(([allProducts]) => {
       res.render('store/products.html', {
-        products: rows,
+        products: allProducts,
         pageTitle: 'Products',
         path: '/products',
       });
