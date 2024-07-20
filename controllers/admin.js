@@ -71,3 +71,14 @@ exports.postEditProduct = (req, res, next) => {
     .then(() => res.redirect('/admin/manage-products'))
     .catch(error => console.log(error));
 };
+
+exports.postDeleteProduct = (req, res, next) => {
+  const productId = req.body.productId;
+
+  Product.deleteProductById(productId)
+    .then(() => {
+      console.log('Deleted product successfully!');
+      res.redirect('/admin/manage-products')
+    })
+    .catch(error => console.log(error));
+};
