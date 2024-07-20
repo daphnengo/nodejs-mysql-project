@@ -15,7 +15,7 @@ class Product {
 
   static findProductById(prodId) {
     return mysqlDb.execute(
-      'SELECT * FROM products WHERE products.id = ?',
+      'SELECT * FROM products WHERE id = ?',
       [prodId]
     );
   }
@@ -25,6 +25,13 @@ class Product {
       'INSERT INTO products (title, price, description, imageUrl) VALUES (?, ?, ?, ?)',
       [this.title, this.price, this.description, this.imageUrl]
     );
+  }
+
+  updateProduct() {
+    return mysqlDb.execute(
+      'UPDATE products SET title = ?, price = ?, description = ?, imageUrl = ? WHERE id = ?',
+      [this.title, this.price, this.description, this.imageUrl, this.id]
+    )
   }
 };
 
