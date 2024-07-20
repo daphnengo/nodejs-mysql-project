@@ -19,6 +19,13 @@ class Product {
       [prodId]
     );
   }
+
+  addProduct() {
+    return mysqlDb.execute(
+      'INSERT INTO products (title, price, description, imageUrl) VALUES (?, ?, ?, ?)',
+      [this.title, this.price, this.description, this.imageUrl]
+    );
+  }
 };
 
 module.exports = Product;
