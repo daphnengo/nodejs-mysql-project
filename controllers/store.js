@@ -37,14 +37,14 @@ exports.postAddToCart = (req, res, next) => {
         // if the product already exists in cart, increase its quantity
         prod.quantity += 1;
 
-        return Cart.updateProductInCart(prod);
+        return Cart.updateItemInCart(prod);
       } else {
-        let newProduct;
+        let newProduct = {};
         newProduct.quantity = 1;
         newProduct.productId = productId;
 
         // if the product does not exists in cart, add it into the cart
-        return Cart.addProductInCart(newProduct);
+        return Cart.addItemInCart(newProduct);
       }
     })
     .then(() => res.redirect('/cart'))
@@ -54,11 +54,20 @@ exports.postAddToCart = (req, res, next) => {
 exports.getCart = (req, res, next) => {
   Cart.fetchAll()
     .then(([products]) => {
+      console.log(products);
       res.render('store/cart.html', {
         path: '/cart',
         pageTitle: 'Your Cart',
         products: products,
       });
     })
+    .catch(error => console.log(error));
+};
+
+exports.postCartDeleteItem = (req, res, next) => {
+  const productId = req.body.productId;
+
+  Cart.deleteItemInCart(productId)
+    .then(() => res.redirect('/cart'))
     .catch(error => console.log(error));
 };

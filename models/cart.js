@@ -8,7 +8,7 @@ class Cart {
 
   static fetchAll() {
     return mysqlDb.execute(
-      'SELECT cart.quantity, products.title FROM cart INNER JOIN products ON cart.productId = products.id'
+      'SELECT cart.quantity, products.title, products.id FROM cart INNER JOIN products ON cart.productId = products.id'
     );
   }
 
@@ -19,18 +19,25 @@ class Cart {
     );
   }
 
-  static updateProductInCart(product) {
+  static updateItemInCart(item) {
     return mysqlDb.execute(
       'UPDATE cart SET quantity = ? WHERE productId = ?',
-      [product.quantity, product.productId]
+      [item.quantity, item.productId]
     )
   }
 
-  static addProductInCart(product) {
+  static addItemInCart(item) {
     return mysqlDb.execute(
       'INSERT INTO cart (quantity, productId) VALUES (? , ?)',
-      [product.quantity, product.productId]
+      [item.quantity, item.productId]
     )
+  }
+
+  static deleteItemInCart(prodId) {
+    return mysqlDb.execute(
+      'DELETE FROM cart WHERE productId = ?',
+      [prodId],
+    );
   }
 }
 
